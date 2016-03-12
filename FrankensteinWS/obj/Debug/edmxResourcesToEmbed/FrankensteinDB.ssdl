@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FrankensteinModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="FrankensteinModelStoreContainer">
+    <EntitySet Name="Doctors" EntityType="FrankensteinModel.Store.Doctors" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="FrankensteinModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Visits" EntityType="FrankensteinModel.Store.Visits" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Visits_Doctors" Association="FrankensteinModel.Store.FK_Visits_Doctors">
+      <End Role="Doctors" EntitySet="Doctors" />
+      <End Role="Visits" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visits_Users" Association="FrankensteinModel.Store.FK_Visits_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Visits" EntitySet="Visits" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Doctors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SURNAME" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="NAME" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="PASSWORD" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Visits">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ID_USER" Type="int" Nullable="false" />
+    <Property Name="ID_DOCTOR" Type="int" Nullable="false" />
+    <Property Name="DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Visits_Doctors">
+    <End Role="Doctors" Type="FrankensteinModel.Store.Doctors" Multiplicity="1" />
+    <End Role="Visits" Type="FrankensteinModel.Store.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctors">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Visits">
+        <PropertyRef Name="ID_DOCTOR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visits_Users">
+    <End Role="Users" Type="FrankensteinModel.Store.Users" Multiplicity="1" />
+    <End Role="Visits" Type="FrankensteinModel.Store.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Visits">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="GetUsersTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p_ID_USER" Type="int" Mode="In" />
+  </Function>
+</Schema>

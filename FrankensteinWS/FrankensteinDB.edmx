@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FrankensteinModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="FrankensteinModelStoreContainer">
+          <EntitySet Name="Doctors" EntityType="FrankensteinModel.Store.Doctors" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="FrankensteinModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Visits" EntityType="FrankensteinModel.Store.Visits" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Visits_Doctors" Association="FrankensteinModel.Store.FK_Visits_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visits_Users" Association="FrankensteinModel.Store.FK_Visits_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SURNAME" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="NAME" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="PASSWORD" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Visits">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USER" Type="int" Nullable="false" />
+          <Property Name="ID_DOCTOR" Type="int" Nullable="false" />
+          <Property Name="DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Visits_Doctors">
+          <End Role="Doctors" Type="FrankensteinModel.Store.Doctors" Multiplicity="1" />
+          <End Role="Visits" Type="FrankensteinModel.Store.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="ID_DOCTOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visits_Users">
+          <End Role="Users" Type="FrankensteinModel.Store.Users" Multiplicity="1" />
+          <End Role="Visits" Type="FrankensteinModel.Store.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetUsersTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_ID_USER" Type="int" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FrankensteinModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FrankensteinEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Doctors" EntityType="FrankensteinModel.Doctor" />
+          <EntitySet Name="Users" EntityType="FrankensteinModel.User" />
+          <EntitySet Name="Visits" EntityType="FrankensteinModel.Visit" />
+          <AssociationSet Name="FK_Visits_Doctors" Association="FrankensteinModel.FK_Visits_Doctors">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visits_Users" Association="FrankensteinModel.FK_Visits_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <FunctionImport Name="GetUsersTest" ReturnType="Collection(FrankensteinModel.GetUsersTest_Result)">
+            <Parameter Name="p_ID_USER" Mode="In" Type="Int32" />
+          </FunctionImport>
+          </EntityContainer>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SURNAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="NAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Visits" Relationship="FrankensteinModel.FK_Visits_Doctors" FromRole="Doctor" ToRole="Visit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Visits" Relationship="FrankensteinModel.FK_Visits_Users" FromRole="User" ToRole="Visit" />
+          </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ID_USER" Nullable="false" />
+          <Property Type="Int32" Name="ID_DOCTOR" Nullable="false" />
+          <Property Type="DateTime" Name="DATE" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Doctor" Relationship="FrankensteinModel.FK_Visits_Doctors" FromRole="Visit" ToRole="Doctor" />
+          <NavigationProperty Name="User" Relationship="FrankensteinModel.FK_Visits_Users" FromRole="Visit" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Visits_Doctors">
+          <End Type="FrankensteinModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="FrankensteinModel.Visit" Role="Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="ID_DOCTOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visits_Users">
+          <End Type="FrankensteinModel.User" Role="User" Multiplicity="1" />
+          <End Type="FrankensteinModel.Visit" Role="Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetUsersTest_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="NAME" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="PASSWORD" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="CEVA" Nullable="false" MaxLength="4" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FrankensteinModelStoreContainer" CdmEntityContainer="FrankensteinEntities">
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="FrankensteinModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FrankensteinModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="FrankensteinModel.Visit">
+              <MappingFragment StoreEntitySet="Visits">
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="ID_DOCTOR" ColumnName="ID_DOCTOR" />
+                <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUsersTest" FunctionName="FrankensteinModel.Store.GetUsersTest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FrankensteinModel.GetUsersTest_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="CEVA" ColumnName="CEVA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

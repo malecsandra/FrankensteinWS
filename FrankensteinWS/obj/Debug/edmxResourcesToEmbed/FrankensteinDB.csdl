@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FrankensteinModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="FrankensteinEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Doctors" EntityType="FrankensteinModel.Doctor" />
+    <EntitySet Name="Users" EntityType="FrankensteinModel.User" />
+    <EntitySet Name="Visits" EntityType="FrankensteinModel.Visit" />
+    <AssociationSet Name="FK_Visits_Doctors" Association="FrankensteinModel.FK_Visits_Doctors">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visits_Users" Association="FrankensteinModel.FK_Visits_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <FunctionImport Name="GetUsersTest" ReturnType="Collection(FrankensteinModel.GetUsersTest_Result)">
+      <Parameter Name="p_ID_USER" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="SURNAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="NAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Visits" Relationship="FrankensteinModel.FK_Visits_Doctors" FromRole="Doctor" ToRole="Visit" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Visits" Relationship="FrankensteinModel.FK_Visits_Users" FromRole="User" ToRole="Visit" />
+  </EntityType>
+  <EntityType Name="Visit">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="ID_USER" Nullable="false" />
+    <Property Type="Int32" Name="ID_DOCTOR" Nullable="false" />
+    <Property Type="DateTime" Name="DATE" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Doctor" Relationship="FrankensteinModel.FK_Visits_Doctors" FromRole="Visit" ToRole="Doctor" />
+    <NavigationProperty Name="User" Relationship="FrankensteinModel.FK_Visits_Users" FromRole="Visit" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Visits_Doctors">
+    <End Type="FrankensteinModel.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="FrankensteinModel.Visit" Role="Visit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="ID_DOCTOR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visits_Users">
+    <End Type="FrankensteinModel.User" Role="User" Multiplicity="1" />
+    <End Type="FrankensteinModel.Visit" Role="Visit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="GetUsersTest_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="NAME" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="PASSWORD" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="CEVA" Nullable="false" MaxLength="4" />
+  </ComplexType>
+</Schema>
