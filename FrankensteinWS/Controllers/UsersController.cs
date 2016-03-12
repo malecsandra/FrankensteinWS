@@ -25,6 +25,7 @@ namespace FrankensteinWS.Controllers
             List<GetUsersTest_Result> result = db.GetUsersTest(null).ToList();
             */
             return userTest;
+
         }
 
         public void Post(int id, [FromBody]User PostUser)
