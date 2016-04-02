@@ -12,15 +12,20 @@ namespace FrankensteinWS
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Test
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string UserPassword { get; set; }
-        public string FullName { get; set; }
-        public Nullable<int> PersonId { get; set; }
-        public bool StatusId { get; set; }
+        public Test()
+        {
+            this.MedicalTests = new HashSet<MedicalTest>();
+        }
     
-        public virtual Person Person { get; set; }
+        public int TestId { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public Nullable<decimal> MinValue { get; set; }
+        public Nullable<decimal> MaxValue { get; set; }
+        public string UnitMeasure { get; set; }
+    
+        public virtual ICollection<MedicalTest> MedicalTests { get; set; }
     }
 }

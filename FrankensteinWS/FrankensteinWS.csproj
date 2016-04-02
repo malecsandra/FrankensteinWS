@@ -15,7 +15,7 @@
     <AssemblyName>FrankensteinWS</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -120,14 +124,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appointment.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppointmentDetail.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ClinicLocation.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AppointmentsController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Doctor.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Drug.cs">
       <DependentUpon>FrankensteinDB.tt</DependentUpon>
     </Compile>
     <Compile Include="FrankensteinDB.Context.cs">
@@ -151,11 +170,35 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs">
+    <Compile Include="MedicalSpeciality.cs">
       <DependentUpon>FrankensteinDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Visit.cs">
+    <Compile Include="MedicalTest.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AppointmentModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Person.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Warnings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Test.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Treatment.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TreatmentDetail.cs">
+      <DependentUpon>FrankensteinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
       <DependentUpon>FrankensteinDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -278,13 +321,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Warnings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -304,7 +352,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51370/</IISUrl>
+          <IISUrl>http://localhost/FrankensteinWS</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

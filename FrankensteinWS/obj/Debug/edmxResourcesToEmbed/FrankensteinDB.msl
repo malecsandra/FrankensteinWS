@@ -1,34 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="FrankensteinModelStoreContainer" CdmEntityContainer="FrankensteinEntities">
-    <EntitySetMapping Name="Doctors">
-      <EntityTypeMapping TypeName="FrankensteinModel.Doctor">
-        <MappingFragment StoreEntitySet="Doctors">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="FrankensteinModel.User">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
-          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Visits">
-      <EntityTypeMapping TypeName="FrankensteinModel.Visit">
-        <MappingFragment StoreEntitySet="Visits">
-          <ScalarProperty Name="DATE" ColumnName="DATE" />
-          <ScalarProperty Name="ID_DOCTOR" ColumnName="ID_DOCTOR" />
-          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GetUsersTest" FunctionName="FrankensteinModel.Store.GetUsersTest">
       <ResultMapping>
         <ComplexTypeMapping TypeName="FrankensteinModel.GetUsersTest_Result">
@@ -39,5 +11,143 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="AppointmentDetails">
+      <EntityTypeMapping TypeName="FrankensteinModel.AppointmentDetail">
+        <MappingFragment StoreEntitySet="AppointmentDetails">
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Diagnostic" ColumnName="Diagnostic" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="AppointmentDetailId" ColumnName="AppointmentDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Appointments">
+      <EntityTypeMapping TypeName="FrankensteinModel.Appointment">
+        <MappingFragment StoreEntitySet="Appointments">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClinicLocations">
+      <EntityTypeMapping TypeName="FrankensteinModel.ClinicLocation">
+        <MappingFragment StoreEntitySet="ClinicLocation">
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="ClinicAddress" ColumnName="ClinicAddress" />
+          <ScalarProperty Name="ClinicName" ColumnName="ClinicName" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Doctors">
+      <EntityTypeMapping TypeName="FrankensteinModel.Doctor">
+        <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Stamp" ColumnName="Stamp" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="SpecialityId" ColumnName="SpecialityId" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drugs">
+      <EntityTypeMapping TypeName="FrankensteinModel.Drug">
+        <MappingFragment StoreEntitySet="Drugs">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MedicalSpecialities">
+      <EntityTypeMapping TypeName="FrankensteinModel.MedicalSpeciality">
+        <MappingFragment StoreEntitySet="MedicalSpeciality">
+          <ScalarProperty Name="SpecialityName" ColumnName="SpecialityName" />
+          <ScalarProperty Name="SpecialityId" ColumnName="SpecialityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MedicalTests">
+      <EntityTypeMapping TypeName="FrankensteinModel.MedicalTest">
+        <MappingFragment StoreEntitySet="MedicalTests">
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
+          <ScalarProperty Name="MedicalTestDate" ColumnName="MedicalTestDate" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="MedicalTestId" ColumnName="MedicalTestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="FrankensteinModel.Person">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="DigitCode" ColumnName="DigitCode" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tests">
+      <EntityTypeMapping TypeName="FrankensteinModel.Test">
+        <MappingFragment StoreEntitySet="Tests">
+          <ScalarProperty Name="UnitMeasure" ColumnName="UnitMeasure" />
+          <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+          <ScalarProperty Name="MinValue" ColumnName="MinValue" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentDetails">
+      <EntityTypeMapping TypeName="FrankensteinModel.TreatmentDetail">
+        <MappingFragment StoreEntitySet="TreatmentDetails">
+          <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
+          <ScalarProperty Name="PeriodicityType" ColumnName="PeriodicityType" />
+          <ScalarProperty Name="Dose" ColumnName="Dose" />
+          <ScalarProperty Name="Tablets" ColumnName="Tablets" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+          <ScalarProperty Name="TreatmentDetailId" ColumnName="TreatmentDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treatments">
+      <EntityTypeMapping TypeName="FrankensteinModel.Treatment">
+        <MappingFragment StoreEntitySet="Treatments">
+          <ScalarProperty Name="TreatmentDate" ColumnName="TreatmentDate" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="FrankensteinModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

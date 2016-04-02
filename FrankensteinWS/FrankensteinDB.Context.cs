@@ -28,9 +28,18 @@ namespace FrankensteinWS
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<AppointmentDetail> AppointmentDetails { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<ClinicLocation> ClinicLocations { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Drug> Drugs { get; set; }
+        public DbSet<MedicalSpeciality> MedicalSpecialities { get; set; }
+        public DbSet<MedicalTest> MedicalTests { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<TreatmentDetail> TreatmentDetails { get; set; }
+        public DbSet<Treatment> Treatments { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Visit> Visits { get; set; }
     
         public virtual ObjectResult<GetUsersTest_Result> GetUsersTest(Nullable<int> p_ID_USER)
         {

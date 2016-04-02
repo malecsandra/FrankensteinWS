@@ -4,185 +4,683 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FrankensteinModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="FrankensteinModelStoreContainer">
-          <EntitySet Name="Doctors" EntityType="FrankensteinModel.Store.Doctors" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Users" EntityType="FrankensteinModel.Store.Users" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Visits" EntityType="FrankensteinModel.Store.Visits" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Visits_Doctors" Association="FrankensteinModel.Store.FK_Visits_Doctors">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="Visits" EntitySet="Visits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Visits_Users" Association="FrankensteinModel.Store.FK_Visits_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Visits" EntitySet="Visits" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Doctors">
+    <Schema Namespace="FrankensteinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppointmentDetails">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="AppointmentDetailId" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="SURNAME" Type="varchar" Nullable="false" MaxLength="200" />
-          <Property Name="NAME" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="AppointmentDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppointmentId" Type="int" Nullable="false" />
+          <Property Name="Diagnostic" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Comments" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Appointments">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClinicLocation">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClinicName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ClinicAddress" Type="varchar" MaxLength="200" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Details" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="SpecialityId" Type="int" Nullable="false" />
+          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="Stamp" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="500" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Drugs">
+          <Key>
+            <PropertyRef Name="DrugId" />
+          </Key>
+          <Property Name="DrugId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="MedicalSpeciality">
+          <Key>
+            <PropertyRef Name="SpecialityId" />
+          </Key>
+          <Property Name="SpecialityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SpecialityName" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MedicalTests">
+          <Key>
+            <PropertyRef Name="MedicalTestId" />
+          </Key>
+          <Property Name="MedicalTestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppointmentId" Type="int" Nullable="false" />
+          <Property Name="MedicalTestDate" Type="datetime" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="Result" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DigitCode" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="Sex" Type="char" MaxLength="1" />
+          <Property Name="Email" Type="varchar" MaxLength="500" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tests">
+          <Key>
+            <PropertyRef Name="TestId" />
+          </Key>
+          <Property Name="TestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MinValue" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="MaxValue" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="UnitMeasure" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TreatmentDetails">
+          <Key>
+            <PropertyRef Name="TreatmentDetailId" />
+          </Key>
+          <Property Name="TreatmentDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TreatmentId" Type="int" Nullable="false" />
+          <Property Name="DrugId" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Tablets" Type="int" />
+          <Property Name="Dose" Type="int" />
+          <Property Name="PeriodicityType" Type="bit" />
+          <Property Name="Periodicity" Type="int" />
+        </EntityType>
+        <EntityType Name="Treatments">
+          <Key>
+            <PropertyRef Name="TreatmentId" />
+          </Key>
+          <Property Name="TreatmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppointmentId" Type="int" Nullable="false" />
+          <Property Name="TreatmentDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="NAME" Type="varchar" Nullable="false" MaxLength="200" />
-          <Property Name="PASSWORD" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="PersonId" Type="int" />
+          <Property Name="StatusId" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Visits">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ID_USER" Type="int" Nullable="false" />
-          <Property Name="ID_DOCTOR" Type="int" Nullable="false" />
-          <Property Name="DATE" Type="datetime" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Visits_Doctors">
-          <End Role="Doctors" Type="FrankensteinModel.Store.Doctors" Multiplicity="1" />
-          <End Role="Visits" Type="FrankensteinModel.Store.Visits" Multiplicity="*" />
+        <Association Name="FK_AppointmentDetails_Appointments">
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="1" />
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Doctors">
-              <PropertyRef Name="ID" />
+            <Principal Role="Appointments">
+              <PropertyRef Name="AppointmentId" />
             </Principal>
-            <Dependent Role="Visits">
-              <PropertyRef Name="ID_DOCTOR" />
+            <Dependent Role="AppointmentDetails">
+              <PropertyRef Name="AppointmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Visits_Users">
-          <End Role="Users" Type="FrankensteinModel.Store.Users" Multiplicity="1" />
-          <End Role="Visits" Type="FrankensteinModel.Store.Visits" Multiplicity="*" />
+        <Association Name="FK_Appointments_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="ID" />
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorId" />
             </Principal>
-            <Dependent Role="Visits">
-              <PropertyRef Name="ID_USER" />
+            <Dependent Role="Appointments">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_ClinicLocation">
+          <End Role="ClinicLocation" Type="Self.ClinicLocation" Multiplicity="1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicLocation">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_MedicalSpeciality">
+          <End Role="MedicalSpeciality" Type="Self.MedicalSpeciality" Multiplicity="1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalSpeciality">
+              <PropertyRef Name="SpecialityId" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalTests_Appointments">
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="1" />
+          <End Role="MedicalTests" Type="Self.MedicalTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointments">
+              <PropertyRef Name="AppointmentId" />
+            </Principal>
+            <Dependent Role="MedicalTests">
+              <PropertyRef Name="AppointmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalTests_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+          <End Role="MedicalTests" Type="Self.MedicalTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="TestId" />
+            </Principal>
+            <Dependent Role="MedicalTests">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentDetails_Drugs">
+          <End Role="Drugs" Type="Self.Drugs" Multiplicity="1" />
+          <End Role="TreatmentDetails" Type="Self.TreatmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drugs">
+              <PropertyRef Name="DrugId" />
+            </Principal>
+            <Dependent Role="TreatmentDetails">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentDetails_Treatments">
+          <End Role="Treatments" Type="Self.Treatments" Multiplicity="1" />
+          <End Role="TreatmentDetails" Type="Self.TreatmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treatments">
+              <PropertyRef Name="TreatmentId" />
+            </Principal>
+            <Dependent Role="TreatmentDetails">
+              <PropertyRef Name="TreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treatments_Appointments">
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="1" />
+          <End Role="Treatments" Type="Self.Treatments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointments">
+              <PropertyRef Name="AppointmentId" />
+            </Principal>
+            <Dependent Role="Treatments">
+              <PropertyRef Name="AppointmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="PersonId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Function Name="GetUsersTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="p_ID_USER" Type="int" Mode="In" />
         </Function>
+        <EntityContainer Name="FrankensteinModelStoreContainer">
+          <EntitySet Name="AppointmentDetails" EntityType="Self.AppointmentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClinicLocation" EntityType="Self.ClinicLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drugs" EntityType="Self.Drugs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalSpeciality" EntityType="Self.MedicalSpeciality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalTests" EntityType="Self.MedicalTests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentDetails" EntityType="Self.TreatmentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AppointmentDetails_Appointments" Association="Self.FK_AppointmentDetails_Appointments">
+            <End Role="Appointments" EntitySet="Appointments" />
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Doctor" Association="Self.FK_Appointments_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Person" Association="Self.FK_Appointments_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_ClinicLocation" Association="Self.FK_Doctor_ClinicLocation">
+            <End Role="ClinicLocation" EntitySet="ClinicLocation" />
+            <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_MedicalSpeciality" Association="Self.FK_Doctor_MedicalSpeciality">
+            <End Role="MedicalSpeciality" EntitySet="MedicalSpeciality" />
+            <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalTests_Appointments" Association="Self.FK_MedicalTests_Appointments">
+            <End Role="Appointments" EntitySet="Appointments" />
+            <End Role="MedicalTests" EntitySet="MedicalTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalTests_Tests" Association="Self.FK_MedicalTests_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="MedicalTests" EntitySet="MedicalTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentDetails_Drugs" Association="Self.FK_TreatmentDetails_Drugs">
+            <End Role="Drugs" EntitySet="Drugs" />
+            <End Role="TreatmentDetails" EntitySet="TreatmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentDetails_Treatments" Association="Self.FK_TreatmentDetails_Treatments">
+            <End Role="Treatments" EntitySet="Treatments" />
+            <End Role="TreatmentDetails" EntitySet="TreatmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treatments_Appointments" Association="Self.FK_Treatments_Appointments">
+            <End Role="Appointments" EntitySet="Appointments" />
+            <End Role="Treatments" EntitySet="Treatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Person" Association="Self.FK_Users_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="FrankensteinModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="FrankensteinEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Doctors" EntityType="FrankensteinModel.Doctor" />
-          <EntitySet Name="Users" EntityType="FrankensteinModel.User" />
-          <EntitySet Name="Visits" EntityType="FrankensteinModel.Visit" />
-          <AssociationSet Name="FK_Visits_Doctors" Association="FrankensteinModel.FK_Visits_Doctors">
-            <End Role="Doctor" EntitySet="Doctors" />
-            <End Role="Visit" EntitySet="Visits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Visits_Users" Association="FrankensteinModel.FK_Visits_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Visit" EntitySet="Visits" />
-          </AssociationSet>
+      <Schema Namespace="FrankensteinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FrankensteinEntities" annotation:LazyLoadingEnabled="true">
           <FunctionImport Name="GetUsersTest" ReturnType="Collection(FrankensteinModel.GetUsersTest_Result)">
-            <Parameter Name="p_ID_USER" Mode="In" Type="Int32" />
+          <Parameter Name="p_ID_USER" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="AppointmentDetails" EntityType="FrankensteinModel.AppointmentDetail" />
+          <EntitySet Name="Appointments" EntityType="FrankensteinModel.Appointment" />
+          <EntitySet Name="ClinicLocations" EntityType="FrankensteinModel.ClinicLocation" />
+          <EntitySet Name="Doctors" EntityType="FrankensteinModel.Doctor" />
+          <EntitySet Name="Drugs" EntityType="FrankensteinModel.Drug" />
+          <EntitySet Name="MedicalSpecialities" EntityType="FrankensteinModel.MedicalSpeciality" />
+          <EntitySet Name="MedicalTests" EntityType="FrankensteinModel.MedicalTest" />
+          <EntitySet Name="People" EntityType="FrankensteinModel.Person" />
+          <EntitySet Name="Tests" EntityType="FrankensteinModel.Test" />
+          <EntitySet Name="TreatmentDetails" EntityType="FrankensteinModel.TreatmentDetail" />
+          <EntitySet Name="Treatments" EntityType="FrankensteinModel.Treatment" />
+          <EntitySet Name="Users" EntityType="FrankensteinModel.User" />
+          <AssociationSet Name="FK_AppointmentDetails_Appointments" Association="FrankensteinModel.FK_AppointmentDetails_Appointments">
+            <End Role="Appointment" EntitySet="Appointments" />
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Doctor" Association="FrankensteinModel.FK_Appointments_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Person" Association="FrankensteinModel.FK_Appointments_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalTests_Appointments" Association="FrankensteinModel.FK_MedicalTests_Appointments">
+            <End Role="Appointment" EntitySet="Appointments" />
+            <End Role="MedicalTest" EntitySet="MedicalTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treatments_Appointments" Association="FrankensteinModel.FK_Treatments_Appointments">
+            <End Role="Appointment" EntitySet="Appointments" />
+            <End Role="Treatment" EntitySet="Treatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_ClinicLocation" Association="FrankensteinModel.FK_Doctor_ClinicLocation">
+            <End Role="ClinicLocation" EntitySet="ClinicLocations" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_MedicalSpeciality" Association="FrankensteinModel.FK_Doctor_MedicalSpeciality">
+            <End Role="MedicalSpeciality" EntitySet="MedicalSpecialities" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentDetails_Drugs" Association="FrankensteinModel.FK_TreatmentDetails_Drugs">
+            <End Role="Drug" EntitySet="Drugs" />
+            <End Role="TreatmentDetail" EntitySet="TreatmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalTests_Tests" Association="FrankensteinModel.FK_MedicalTests_Tests">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="MedicalTest" EntitySet="MedicalTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Person" Association="FrankensteinModel.FK_Users_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentDetails_Treatments" Association="FrankensteinModel.FK_TreatmentDetails_Treatments">
+            <End Role="Treatment" EntitySet="Treatments" />
+            <End Role="TreatmentDetail" EntitySet="TreatmentDetails" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Doctor">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="SURNAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-          <Property Name="NAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Visits" Relationship="FrankensteinModel.FK_Visits_Doctors" FromRole="Doctor" ToRole="Visit" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="NAME" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-          <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Visits" Relationship="FrankensteinModel.FK_Visits_Users" FromRole="User" ToRole="Visit" />
-          </EntityType>
-        <EntityType Name="Visit">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ID_USER" Nullable="false" />
-          <Property Type="Int32" Name="ID_DOCTOR" Nullable="false" />
-          <Property Type="DateTime" Name="DATE" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Doctor" Relationship="FrankensteinModel.FK_Visits_Doctors" FromRole="Visit" ToRole="Doctor" />
-          <NavigationProperty Name="User" Relationship="FrankensteinModel.FK_Visits_Users" FromRole="Visit" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_Visits_Doctors">
-          <End Type="FrankensteinModel.Doctor" Role="Doctor" Multiplicity="1" />
-          <End Type="FrankensteinModel.Visit" Role="Visit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Visit">
-              <PropertyRef Name="ID_DOCTOR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Visits_Users">
-          <End Type="FrankensteinModel.User" Role="User" Multiplicity="1" />
-          <End Type="FrankensteinModel.Visit" Role="Visit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Visit">
-              <PropertyRef Name="ID_USER" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="GetUsersTest_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="NAME" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="PASSWORD" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="CEVA" Nullable="false" MaxLength="4" />
         </ComplexType>
+        <EntityType Name="AppointmentDetail">
+          <Key>
+            <PropertyRef Name="AppointmentDetailId" />
+          </Key>
+          <Property Name="AppointmentDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" />
+          <Property Name="Diagnostic" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Appointment" Relationship="FrankensteinModel.FK_AppointmentDetails_Appointments" FromRole="AppointmentDetail" ToRole="Appointment" />
+        </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AppointmentDetails" Relationship="FrankensteinModel.FK_AppointmentDetails_Appointments" FromRole="Appointment" ToRole="AppointmentDetail" />
+          <NavigationProperty Name="Doctor" Relationship="FrankensteinModel.FK_Appointments_Doctor" FromRole="Appointment" ToRole="Doctor" />
+          <NavigationProperty Name="Person" Relationship="FrankensteinModel.FK_Appointments_Person" FromRole="Appointment" ToRole="Person" />
+          <NavigationProperty Name="MedicalTests" Relationship="FrankensteinModel.FK_MedicalTests_Appointments" FromRole="Appointment" ToRole="MedicalTest" />
+          <NavigationProperty Name="Treatments" Relationship="FrankensteinModel.FK_Treatments_Appointments" FromRole="Appointment" ToRole="Treatment" />
+        </EntityType>
+        <EntityType Name="ClinicLocation">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClinicName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ClinicAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Doctors" Relationship="FrankensteinModel.FK_Doctor_ClinicLocation" FromRole="ClinicLocation" ToRole="Doctor" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialityId" Type="Int32" Nullable="false" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="Stamp" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Appointments" Relationship="FrankensteinModel.FK_Appointments_Doctor" FromRole="Doctor" ToRole="Appointment" />
+          <NavigationProperty Name="ClinicLocation" Relationship="FrankensteinModel.FK_Doctor_ClinicLocation" FromRole="Doctor" ToRole="ClinicLocation" />
+          <NavigationProperty Name="MedicalSpeciality" Relationship="FrankensteinModel.FK_Doctor_MedicalSpeciality" FromRole="Doctor" ToRole="MedicalSpeciality" />
+        </EntityType>
+        <EntityType Name="Drug">
+          <Key>
+            <PropertyRef Name="DrugId" />
+          </Key>
+          <Property Name="DrugId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TreatmentDetails" Relationship="FrankensteinModel.FK_TreatmentDetails_Drugs" FromRole="Drug" ToRole="TreatmentDetail" />
+        </EntityType>
+        <EntityType Name="MedicalSpeciality">
+          <Key>
+            <PropertyRef Name="SpecialityId" />
+          </Key>
+          <Property Name="SpecialityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SpecialityName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Doctors" Relationship="FrankensteinModel.FK_Doctor_MedicalSpeciality" FromRole="MedicalSpeciality" ToRole="Doctor" />
+        </EntityType>
+        <EntityType Name="MedicalTest">
+          <Key>
+            <PropertyRef Name="MedicalTestId" />
+          </Key>
+          <Property Name="MedicalTestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" />
+          <Property Name="MedicalTestDate" Type="DateTime" Precision="3" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="Result" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Appointment" Relationship="FrankensteinModel.FK_MedicalTests_Appointments" FromRole="MedicalTest" ToRole="Appointment" />
+          <NavigationProperty Name="Test" Relationship="FrankensteinModel.FK_MedicalTests_Tests" FromRole="MedicalTest" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DigitCode" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Appointments" Relationship="FrankensteinModel.FK_Appointments_Person" FromRole="Person" ToRole="Appointment" />
+          <NavigationProperty Name="Users" Relationship="FrankensteinModel.FK_Users_Person" FromRole="Person" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="TestId" />
+          </Key>
+          <Property Name="TestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MinValue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MaxValue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UnitMeasure" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MedicalTests" Relationship="FrankensteinModel.FK_MedicalTests_Tests" FromRole="Test" ToRole="MedicalTest" />
+        </EntityType>
+        <EntityType Name="TreatmentDetail">
+          <Key>
+            <PropertyRef Name="TreatmentDetailId" />
+          </Key>
+          <Property Name="TreatmentDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TreatmentId" Type="Int32" Nullable="false" />
+          <Property Name="DrugId" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Tablets" Type="Int32" />
+          <Property Name="Dose" Type="Int32" />
+          <Property Name="PeriodicityType" Type="Boolean" />
+          <Property Name="Periodicity" Type="Int32" />
+          <NavigationProperty Name="Drug" Relationship="FrankensteinModel.FK_TreatmentDetails_Drugs" FromRole="TreatmentDetail" ToRole="Drug" />
+          <NavigationProperty Name="Treatment" Relationship="FrankensteinModel.FK_TreatmentDetails_Treatments" FromRole="TreatmentDetail" ToRole="Treatment" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="TreatmentId" />
+          </Key>
+          <Property Name="TreatmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" />
+          <Property Name="TreatmentDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Appointment" Relationship="FrankensteinModel.FK_Treatments_Appointments" FromRole="Treatment" ToRole="Appointment" />
+          <NavigationProperty Name="TreatmentDetails" Relationship="FrankensteinModel.FK_TreatmentDetails_Treatments" FromRole="Treatment" ToRole="TreatmentDetail" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserPassword" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="StatusId" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="FrankensteinModel.FK_Users_Person" FromRole="User" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_AppointmentDetails_Appointments">
+          <End Type="FrankensteinModel.Appointment" Role="Appointment" Multiplicity="1" />
+          <End Type="FrankensteinModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointment">
+              <PropertyRef Name="AppointmentId" />
+            </Principal>
+            <Dependent Role="AppointmentDetail">
+              <PropertyRef Name="AppointmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_Doctor">
+          <End Type="FrankensteinModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="FrankensteinModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_Person">
+          <End Type="FrankensteinModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="FrankensteinModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalTests_Appointments">
+          <End Type="FrankensteinModel.Appointment" Role="Appointment" Multiplicity="1" />
+          <End Type="FrankensteinModel.MedicalTest" Role="MedicalTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointment">
+              <PropertyRef Name="AppointmentId" />
+            </Principal>
+            <Dependent Role="MedicalTest">
+              <PropertyRef Name="AppointmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treatments_Appointments">
+          <End Type="FrankensteinModel.Appointment" Role="Appointment" Multiplicity="1" />
+          <End Type="FrankensteinModel.Treatment" Role="Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointment">
+              <PropertyRef Name="AppointmentId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="AppointmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_ClinicLocation">
+          <End Type="FrankensteinModel.ClinicLocation" Role="ClinicLocation" Multiplicity="1" />
+          <End Type="FrankensteinModel.Doctor" Role="Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClinicLocation">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_MedicalSpeciality">
+          <End Type="FrankensteinModel.MedicalSpeciality" Role="MedicalSpeciality" Multiplicity="1" />
+          <End Type="FrankensteinModel.Doctor" Role="Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalSpeciality">
+              <PropertyRef Name="SpecialityId" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentDetails_Drugs">
+          <End Type="FrankensteinModel.Drug" Role="Drug" Multiplicity="1" />
+          <End Type="FrankensteinModel.TreatmentDetail" Role="TreatmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="DrugId" />
+            </Principal>
+            <Dependent Role="TreatmentDetail">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalTests_Tests">
+          <End Type="FrankensteinModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="FrankensteinModel.MedicalTest" Role="MedicalTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="TestId" />
+            </Principal>
+            <Dependent Role="MedicalTest">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Person">
+          <End Type="FrankensteinModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="FrankensteinModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentDetails_Treatments">
+          <End Type="FrankensteinModel.Treatment" Role="Treatment" Multiplicity="1" />
+          <End Type="FrankensteinModel.TreatmentDetail" Role="TreatmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treatment">
+              <PropertyRef Name="TreatmentId" />
+            </Principal>
+            <Dependent Role="TreatmentDetail">
+              <PropertyRef Name="TreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FrankensteinModelStoreContainer" CdmEntityContainer="FrankensteinEntities">
-          <EntitySetMapping Name="Doctors">
-            <EntityTypeMapping TypeName="FrankensteinModel.Doctor">
-              <MappingFragment StoreEntitySet="Doctors">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="FrankensteinModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Visits">
-            <EntityTypeMapping TypeName="FrankensteinModel.Visit">
-              <MappingFragment StoreEntitySet="Visits">
-                <ScalarProperty Name="DATE" ColumnName="DATE" />
-                <ScalarProperty Name="ID_DOCTOR" ColumnName="ID_DOCTOR" />
-                <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetUsersTest" FunctionName="FrankensteinModel.Store.GetUsersTest">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FrankensteinModel.GetUsersTest_Result">
@@ -193,6 +691,144 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="AppointmentDetails">
+            <EntityTypeMapping TypeName="FrankensteinModel.AppointmentDetail">
+              <MappingFragment StoreEntitySet="AppointmentDetails">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Diagnostic" ColumnName="Diagnostic" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="AppointmentDetailId" ColumnName="AppointmentDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="FrankensteinModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointments">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClinicLocations">
+            <EntityTypeMapping TypeName="FrankensteinModel.ClinicLocation">
+              <MappingFragment StoreEntitySet="ClinicLocation">
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ClinicAddress" ColumnName="ClinicAddress" />
+                <ScalarProperty Name="ClinicName" ColumnName="ClinicName" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="FrankensteinModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Stamp" ColumnName="Stamp" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="SpecialityId" ColumnName="SpecialityId" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drugs">
+            <EntityTypeMapping TypeName="FrankensteinModel.Drug">
+              <MappingFragment StoreEntitySet="Drugs">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalSpecialities">
+            <EntityTypeMapping TypeName="FrankensteinModel.MedicalSpeciality">
+              <MappingFragment StoreEntitySet="MedicalSpeciality">
+                <ScalarProperty Name="SpecialityName" ColumnName="SpecialityName" />
+                <ScalarProperty Name="SpecialityId" ColumnName="SpecialityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalTests">
+            <EntityTypeMapping TypeName="FrankensteinModel.MedicalTest">
+              <MappingFragment StoreEntitySet="MedicalTests">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="MedicalTestDate" ColumnName="MedicalTestDate" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="MedicalTestId" ColumnName="MedicalTestId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="FrankensteinModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="DigitCode" ColumnName="DigitCode" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="FrankensteinModel.Test">
+              <MappingFragment StoreEntitySet="Tests">
+                <ScalarProperty Name="UnitMeasure" ColumnName="UnitMeasure" />
+                <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+                <ScalarProperty Name="MinValue" ColumnName="MinValue" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TreatmentDetails">
+            <EntityTypeMapping TypeName="FrankensteinModel.TreatmentDetail">
+              <MappingFragment StoreEntitySet="TreatmentDetails">
+                <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
+                <ScalarProperty Name="PeriodicityType" ColumnName="PeriodicityType" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+                <ScalarProperty Name="Tablets" ColumnName="Tablets" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+                <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+                <ScalarProperty Name="TreatmentDetailId" ColumnName="TreatmentDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treatments">
+            <EntityTypeMapping TypeName="FrankensteinModel.Treatment">
+              <MappingFragment StoreEntitySet="Treatments">
+                <ScalarProperty Name="TreatmentDate" ColumnName="TreatmentDate" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FrankensteinModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -207,8 +843,9 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

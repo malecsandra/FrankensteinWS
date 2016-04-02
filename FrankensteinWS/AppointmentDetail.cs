@@ -12,15 +12,13 @@ namespace FrankensteinWS
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class AppointmentDetail
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string UserPassword { get; set; }
-        public string FullName { get; set; }
-        public Nullable<int> PersonId { get; set; }
-        public bool StatusId { get; set; }
+        public int AppointmentDetailId { get; set; }
+        public int AppointmentId { get; set; }
+        public string Diagnostic { get; set; }
+        public string Comments { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual Appointment Appointment { get; set; }
     }
 }

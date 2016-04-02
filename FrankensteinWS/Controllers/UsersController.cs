@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using FrankensteinWS.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,38 +9,45 @@ using System.Web.Http;
 
 namespace FrankensteinWS.Controllers
 {
-    public class UsersController : ApiController
+    public class UsersController : BaseController
     {
-        FrankensteinEntities db = new FrankensteinEntities();
+
         // GET api/Users/5
-        public User Get(int id)
+        public UserModel Get(int id)
         {
-            User userTest = db.Users.Include("Visits").Where(u => u.ID == id).FirstOrDefault();
-            /*List<Visit> visits = userTest.Visits.ToList();
 
-            List<User> users = db.Users.ToList();
+            User userTest = db.Users.Where(u => u.UserId == id).FirstOrDefault();
 
-            string name = db.Users.Where(u => u.ID == 1).Select(u => u.NAME).FirstOrDefault();
 
-            List<Visit> visits2 = db.Visits.Where(v => v.ID_USER == userTest.ID).ToList();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserModel>());
+            var mapper = config.CreateMapper();
+            UserModel toReturn = mapper.Map<UserModel>(userTest);
+            
+
+            //List<Visit> visits = userTest.Visits.ToList();
+
+            //List<User> users = db.Users.ToList();
+
+            //string name = db.Users.Where(u => u.UserId == 1).Select(u => u.UserName).FirstOrDefault();
+
+            /*List<Visit> visits2 = db.Visits.Where(v => v.ID_USER == userTest.ID).ToList();
 
             List<GetUsersTest_Result> result = db.GetUsersTest(null).ToList();
             */
-            return userTest;
-
+            return toReturn;
         }
 
         public void Post(int id, [FromBody]User PostUser)
         {
-            User user = db.Users.Where(u => u.ID == id).FirstOrDefault();
+            User user = db.Users.Where(u => u.UserId == id).FirstOrDefault();
             if (user == null)
             {
                 //user nu exista in bd
             }
             else
             {
-                user.NAME = PostUser.NAME;
-                user.PASSWORD = PostUser.PASSWORD;
+                user.UserName = PostUser.UserName;
+                user.UserPassword = PostUser.UserPassword;
                 db.SaveChanges();
             }
         }
@@ -46,8 +55,8 @@ namespace FrankensteinWS.Controllers
         public void Put([FromBody]User PostUser)
         {
             User NewUser = new User();
-            NewUser.NAME = PostUser.NAME;
-            NewUser.PASSWORD = PostUser.PASSWORD;
+            NewUser.UserName = PostUser.UserName;
+            NewUser.UserPassword = PostUser.UserPassword;
 
             db.Users.Add(NewUser);
             db.SaveChanges();
@@ -55,7 +64,7 @@ namespace FrankensteinWS.Controllers
 
         public void Delete(int id)
         {
-            var user = new User { ID = 1 };
+            var user = new User { UserId = 1 };
             db.Users.Attach(user);
             db.Users.Remove(user);
             db.SaveChanges();

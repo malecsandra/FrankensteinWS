@@ -4,13 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="12c8ebacc9bb4da884e060e37e58e885" Name="Diagram1">
-        <EntityTypeShape EntityType="FrankensteinModel.Doctor" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FrankensteinModel.User" Width="1.5" PointX="6.875" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FrankensteinModel.Visit" Width="1.5" PointX="4.125" PointY="1.375" />
-        <AssociationConnector Association="FrankensteinModel.FK_Visits_Doctors" />
-        <AssociationConnector Association="FrankensteinModel.FK_Visits_Users" />
-        </Diagram>
+      <Diagram DiagramId="e0debb1acd8a4cd7be8cef73d8cd716d" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="FrankensteinModel.AppointmentDetail" Width="1.875" PointX="9.375" PointY="3" />
+        <EntityTypeShape EntityType="FrankensteinModel.Appointment" Width="1.5" PointX="7" PointY="0.5" />
+        <EntityTypeShape EntityType="FrankensteinModel.ClinicLocation" Width="1.5" PointX="13.875" PointY="8.125" />
+        <EntityTypeShape EntityType="FrankensteinModel.Doctor" Width="1.5" PointX="14.375" PointY="0.5" />
+        <EntityTypeShape EntityType="FrankensteinModel.Drug" Width="1.5" PointX="14" PointY="5.75" />
+        <EntityTypeShape EntityType="FrankensteinModel.MedicalSpeciality" Width="1.5" PointX="12" PointY="7.125" />
+        <EntityTypeShape EntityType="FrankensteinModel.MedicalTest" Width="1.5" PointX="5.375" PointY="4.625" />
+        <EntityTypeShape EntityType="FrankensteinModel.Person" Width="1.5" PointX="3.125" PointY="1.875" />
+        <EntityTypeShape EntityType="FrankensteinModel.Test" Width="1.5" PointX="7.375" PointY="6.125" />
+        <EntityTypeShape EntityType="FrankensteinModel.TreatmentDetail" Width="1.5" PointX="12.625" PointY="1.5" />
+        <EntityTypeShape EntityType="FrankensteinModel.Treatment" Width="1.5" PointX="10.125" PointY="6" />
+        <EntityTypeShape EntityType="FrankensteinModel.User" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="FrankensteinModel.FK_AppointmentDetails_Appointments" />
+        <AssociationConnector Association="FrankensteinModel.FK_Appointments_Doctor" />
+        <AssociationConnector Association="FrankensteinModel.FK_Appointments_Person" />
+        <AssociationConnector Association="FrankensteinModel.FK_MedicalTests_Appointments" />
+        <AssociationConnector Association="FrankensteinModel.FK_Treatments_Appointments" />
+        <AssociationConnector Association="FrankensteinModel.FK_Doctor_ClinicLocation" />
+        <AssociationConnector Association="FrankensteinModel.FK_Doctor_MedicalSpeciality" />
+        <AssociationConnector Association="FrankensteinModel.FK_TreatmentDetails_Drugs" />
+        <AssociationConnector Association="FrankensteinModel.FK_MedicalTests_Tests" />
+        <AssociationConnector Association="FrankensteinModel.FK_Users_Person" />
+        <AssociationConnector Association="FrankensteinModel.FK_TreatmentDetails_Treatments" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -12,14 +12,15 @@ namespace FrankensteinWS
     using System;
     using System.Collections.Generic;
     
-    public partial class Visit
+    public partial class MedicalTest
     {
-        public int ID { get; set; }
-        public int ID_USER { get; set; }
-        public int ID_DOCTOR { get; set; }
-        public System.DateTime DATE { get; set; }
+        public int MedicalTestId { get; set; }
+        public int AppointmentId { get; set; }
+        public Nullable<System.DateTime> MedicalTestDate { get; set; }
+        public int TestId { get; set; }
+        public string Result { get; set; }
     
-        public virtual Doctor Doctor { get; set; }
-        public virtual User User { get; set; }
+        public virtual Appointment Appointment { get; set; }
+        public virtual Test Test { get; set; }
     }
 }

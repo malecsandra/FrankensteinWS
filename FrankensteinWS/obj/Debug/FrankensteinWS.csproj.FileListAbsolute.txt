@@ -30,3 +30,40 @@ D:\csie\BDSA\FrainkensteinWS\FrankensteinWS\FrankensteinWS\bin\System.Web.WebPag
 D:\csie\BDSA\FrainkensteinWS\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.csprojResolveAssemblyReference.cache
 D:\csie\BDSA\FrainkensteinWS\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.dll
 D:\csie\BDSA\FrainkensteinWS\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.pdb
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\FrankensteinWS.dll.config
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\FrankensteinWS.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\FrankensteinWS.pdb
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\Antlr3.Runtime.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\EntityFramework.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\Microsoft.Web.Infrastructure.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\Newtonsoft.Json.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Net.Http.Formatting.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Helpers.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Http.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Http.WebHost.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Mvc.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Optimization.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Providers.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Razor.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.WebPages.Deployment.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.WebPages.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.WebPages.Razor.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\WebGrease.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\EntityFramework.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\Newtonsoft.Json.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Net.Http.Formatting.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Helpers.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Http.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Http.WebHost.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Mvc.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.Razor.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.WebPages.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.WebPages.Deployment.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\System.Web.WebPages.Razor.xml
+D:\Din facultate\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.csprojResolveAssemblyReference.cache
+D:\Din facultate\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.pdb
+D:\Din facultate\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.Resources.Warnings.resources
+D:\Din facultate\FrankensteinWS\FrankensteinWS\obj\Debug\FrankensteinWS.csproj.GenerateResource.Cache
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\AutoMapper.dll
+D:\Din facultate\FrankensteinWS\FrankensteinWS\bin\AutoMapper.xml
