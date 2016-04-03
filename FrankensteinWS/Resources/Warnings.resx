@@ -138,4 +138,7 @@
   <data name="stockUpdated" xml:space="preserve">
     <value>Stocul a fost actualizat!</value>
   </data>
+  <data name="usernameExists" xml:space="preserve">
+    <value>Username-ul exista deja!</value>
+  </data>
 </root>

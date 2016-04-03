@@ -46,6 +46,10 @@ namespace FrankensteinWS.Controllers
            return CreateHttpResponseException(reason, HttpStatusCode.OK);
        }
 
+       protected HttpResponseException UsernameTaken(string reason)
+       {
+           return CreateHttpResponseException(reason, HttpStatusCode.Conflict);
+       }
        /// <summary>
        /// Creates an <see cref="HttpResponseException"/> to be thrown by the api.
        /// </summary>

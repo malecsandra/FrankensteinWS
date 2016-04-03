@@ -122,5 +122,14 @@ namespace FrankensteinWS.Resources {
                 return ResourceManager.GetString("stockUpdated", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username-ul exista deja!.
+        /// </summary>
+        internal static string usernameExists {
+            get {
+                return ResourceManager.GetString("usernameExists", resourceCulture);
+            }
+        }
     }
 }
