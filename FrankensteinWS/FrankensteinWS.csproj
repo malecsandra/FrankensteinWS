@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Controllers\AppointmentsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -178,8 +179,11 @@
       <DependentUpon>FrankensteinDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AppointmentModel.cs" />
+    <Compile Include="Models\ClinicModel.cs" />
+    <Compile Include="Models\DoctorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\SpecialityModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Person.cs">
       <DependentUpon>FrankensteinDB.tt</DependentUpon>

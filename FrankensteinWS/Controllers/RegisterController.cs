@@ -39,7 +39,7 @@ namespace FrankensteinWS.Controllers
                 Person NewPerson = new Person();
                 NewPerson = mapperP.Map<Person>(usermodel.PersonModel);
 
-                 var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, User>());
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, User>());
                 var mapper = config.CreateMapper();
 
                 User NewUser = new User();
