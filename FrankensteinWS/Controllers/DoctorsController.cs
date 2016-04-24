@@ -23,7 +23,7 @@ namespace FrankensteinWS.Controllers
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Doctor, DoctorModel>()); // Create a mapper config to convert from DB-Doctors to return doctors
             var mapper = config.CreateMapper(); // Create the mapper using the above config
 
-            // Configure each doctor that we get from the DB
+            // Configure each doctor that we get from the DBV
             foreach (var doc in dbDoctors) // For every doctor that we got from the database
             {
                 DoctorModel docModel = mapper.Map<DoctorModel>(doc); // Create a doctor model that we are going to add to the list that we will be returning
