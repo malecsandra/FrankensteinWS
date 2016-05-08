@@ -18,6 +18,7 @@ namespace FrankensteinWS.Models
 
         public string Speciality { get; set; }
         public string ClinicName { get; set; }
+        public string ClinicAddress { get; set; }
 
         public List<AppointmentDetailsModel> AppointmentDetailsList { get; set; } 
     }

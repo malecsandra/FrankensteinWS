@@ -59,6 +59,7 @@ namespace FrankensteinWS.Controllers
                 appModel.Doctor = dbApp.Doctor.Name + ' ' + dbApp.Doctor.Surname;
                 appModel.Speciality = dbApp.Doctor.MedicalSpeciality.SpecialityName;
                 appModel.ClinicName = dbApp.Doctor.ClinicLocation.ClinicName;
+                appModel.ClinicAddress = dbApp.Doctor.ClinicLocation.ClinicAddress;
 
                 dbAppsDetail = db.AppointmentDetails.Where(b => b.AppointmentId == dbApp.AppointmentId).ToList();
 
@@ -78,8 +79,16 @@ namespace FrankensteinWS.Controllers
         }
 
         // POST api/appointments
-        public void Post([FromBody]string value)
+        public void Post(Appointment appmodel)
         {
+           /* var config = new MapperConfiguration(cfg => cfg.CreateMap<AppointmentModel, Appointment>());
+            var mapper = config.CreateMapper();
+
+            Appointment newApp = new Appointment();
+            newApp = mapper.Map<Appointment>(appmodel);*/
+
+            db.Appointments.Add(appmodel);
+            db.SaveChanges();
         }
 
         // PUT api/appointments/5

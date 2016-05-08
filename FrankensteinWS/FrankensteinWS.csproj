@@ -145,6 +145,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicalTestsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Doctor.cs">
@@ -188,6 +189,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MedicalTestModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\ScheduleModel.cs" />
     <Compile Include="Models\SpecialityModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\UserModel.cs" />
