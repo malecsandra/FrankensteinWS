@@ -146,6 +146,7 @@
     <Compile Include="Controllers\MedicalTestsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
+    <Compile Include="Controllers\TreatmentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Doctor.cs">
@@ -184,6 +185,7 @@
     <Compile Include="Models\AppointmentDetailsModel.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
     <Compile Include="Models\AppointmentTestSet.cs" />
+    <Compile Include="Models\AppointmentTreatment.cs" />
     <Compile Include="Models\ClinicModel.cs" />
     <Compile Include="Models\DoctorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Models\ScheduleModel.cs" />
     <Compile Include="Models\SpecialityModel.cs" />
     <Compile Include="Models\TestModel.cs" />
+    <Compile Include="Models\TreatmentDetailsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Person.cs">
       <DependentUpon>FrankensteinDB.tt</DependentUpon>

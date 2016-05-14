@@ -18,7 +18,7 @@ namespace FrankensteinWS.Controllers
         {
             List<DoctorModel> toReturn = new List<DoctorModel>(); // Create a list that contains the results we are about to send
 
-            List<Doctor> dbDoctors = db.Doctors.ToList(); // Get all the doctors from the database
+            List<Doctor> dbDoctors = db.Doctors.OrderBy(d => d.Name).ToList(); // Get all the doctors from the database
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Doctor, DoctorModel>()); // Create a mapper config to convert from DB-Doctors to return doctors
             var mapper = config.CreateMapper(); // Create the mapper using the above config

@@ -5,14 +5,14 @@ using System.Web;
 
 namespace FrankensteinWS.Models
 {
-    public class AppointmentTestSet
+    public class AppointmentTreatment
     {
         public int AppointmentId { get; set; }
-        public System.DateTime MedicalTestDate { get; set; }
+        public System.DateTime TreatmentDate { get; set; }
         public string Diagnostic { get; set; }
         public string Doctor { get; set; }
         public string Speciality { get; set; }
 
-        public List<MedicalTestModel> TestList { get; set; }
+        public List<TreatmentDetailsModel> TreatmentList { get; set; }
     }
 }

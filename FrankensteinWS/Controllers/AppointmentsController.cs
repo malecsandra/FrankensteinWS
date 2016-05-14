@@ -47,7 +47,7 @@ namespace FrankensteinWS.Controllers
             List<Appointment> dbApps = new List<Appointment>();
             List<AppointmentDetail> dbAppsDetail = new List<AppointmentDetail>();
 
-            dbApps = db.Appointments.Where(a => a.PersonId == id).ToList();
+            dbApps = db.Appointments.Where(a => a.PersonId == id).OrderByDescending(a => a.AppointmentDate).ToList();
             
           
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Appointment, AppointmentModel>());

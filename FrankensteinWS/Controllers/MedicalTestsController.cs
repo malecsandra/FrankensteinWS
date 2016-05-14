@@ -26,7 +26,7 @@ namespace FrankensteinWS.Controllers
             List<Appointment> dbApps = new List<Appointment>();
 
             dbTests = db.Tests.ToList();
-            dbApps = db.Appointments.Where(a => a.PersonId == id).ToList();
+            dbApps = db.Appointments.Where(a => a.PersonId == id).OrderByDescending(a => a.AppointmentDate).ToList();
 
             foreach (var dbApp in dbApps)
             {
@@ -35,6 +35,7 @@ namespace FrankensteinWS.Controllers
                 appTestSet.MedicalTestDate = dbApp.AppointmentDate;
                 appTestSet.Doctor = dbApp.Doctor.Name + ' ' + dbApp.Doctor.Surname;
                 appTestSet.Speciality = dbApp.Doctor.MedicalSpeciality.SpecialityName;
+                appTestSet.Diagnostic = db.AppointmentDetails.Where(a => a.AppointmentId == dbApp.AppointmentId).Select(a => a.Diagnostic).FirstOrDefault();
                 appTestSet.TestList = new List<MedicalTestModel>();
 
                 dbMedicalTests = db.MedicalTests.Where(m => m.AppointmentId == dbApp.AppointmentId).ToList();
@@ -53,7 +54,10 @@ namespace FrankensteinWS.Controllers
     
                 }
 
-                toReturn.Add(appTestSet);
+                if (appTestSet.TestList.Count != 0)
+                {
+                    toReturn.Add(appTestSet);
+                }
             }
             
             return toReturn;
