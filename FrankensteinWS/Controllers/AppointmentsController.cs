@@ -92,8 +92,11 @@ namespace FrankensteinWS.Controllers
         }
 
         // PUT api/appointments/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(Appointment appmodel)
         {
+            Appointment appToUpdate = db.Appointments.Where(a => a.AppointmentId == appmodel.AppointmentId).FirstOrDefault();
+            appToUpdate.StatusId = -1;
+            db.SaveChanges();
         }
 
         // DELETE api/appointments/5
