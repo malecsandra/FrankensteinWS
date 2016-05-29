@@ -149,5 +149,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DoctorImages">
+      <EntityTypeMapping TypeName="FrankensteinModel.DoctorImage">
+        <MappingFragment StoreEntitySet="DoctorImage">
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

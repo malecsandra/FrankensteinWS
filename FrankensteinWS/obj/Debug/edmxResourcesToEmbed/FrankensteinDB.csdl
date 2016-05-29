@@ -60,6 +60,7 @@
       <End Role="Treatment" EntitySet="Treatments" />
       <End Role="TreatmentDetail" EntitySet="TreatmentDetails" />
     </AssociationSet>
+    <EntitySet Name="DoctorImages" EntityType="FrankensteinModel.DoctorImage" />
   </EntityContainer>
   <ComplexType Name="GetUsersTest_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
@@ -347,4 +348,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="DoctorImage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DoctorId" Type="Int32" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
 </Schema>

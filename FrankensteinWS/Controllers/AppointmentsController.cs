@@ -46,10 +46,9 @@ namespace FrankensteinWS.Controllers
 
             List<Appointment> dbApps = new List<Appointment>();
             List<AppointmentDetail> dbAppsDetail = new List<AppointmentDetail>();
-
+                     
             dbApps = db.Appointments.Where(a => a.PersonId == id).OrderByDescending(a => a.AppointmentDate).ToList();
-            
-          
+               
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Appointment, AppointmentModel>());
             var mapper = config.CreateMapper();
 
@@ -61,6 +60,16 @@ namespace FrankensteinWS.Controllers
                 appModel.ClinicName = dbApp.Doctor.ClinicLocation.ClinicName;
                 appModel.ClinicAddress = dbApp.Doctor.ClinicLocation.ClinicAddress;
 
+                /*
+                byte[] Photo;
+                DoctorImage d = db.DoctorImages.Where(p => p.DoctorId == dbApp.DoctorId).FirstOrDefault();
+                if (d != null)
+                {
+                    Photo = d.Photo;
+                    appModel.Photo = Photo;
+                }
+                */
+                     
                 dbAppsDetail = db.AppointmentDetails.Where(b => b.AppointmentId == dbApp.AppointmentId).ToList();
 
                 appModel.AppointmentDetailsList = new List<AppointmentDetailsModel>();

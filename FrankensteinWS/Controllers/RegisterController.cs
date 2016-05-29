@@ -52,6 +52,8 @@ namespace FrankensteinWS.Controllers
             }
             else
             {
+                HttpResponseException responseException = UsernameTaken(Warnings.usernameExists);
+                
                 throw UsernameTaken(Warnings.usernameExists);
             }
            

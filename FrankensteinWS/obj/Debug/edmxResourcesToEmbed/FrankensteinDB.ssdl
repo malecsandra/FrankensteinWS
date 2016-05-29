@@ -43,6 +43,16 @@
     <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
     <Property Name="Photo" Type="varbinary(max)" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Frankenstein.dbo.DoctorImage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="DoctorImage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="Photo" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="Drugs">
     <Key>
       <PropertyRef Name="DrugId" />
@@ -274,6 +284,13 @@
     <EntitySet Name="TreatmentDetails" EntityType="Self.TreatmentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DoctorImage" EntityType="Self.DoctorImage" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[DoctorImage].[Id] AS [Id], 
+[DoctorImage].[DoctorId] AS [DoctorId], 
+[DoctorImage].[Photo] AS [Photo]
+FROM [dbo].[DoctorImage] AS [DoctorImage]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_AppointmentDetails_Appointments" Association="Self.FK_AppointmentDetails_Appointments">
       <End Role="Appointments" EntitySet="Appointments" />
       <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />

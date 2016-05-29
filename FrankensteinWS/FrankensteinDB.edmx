@@ -48,6 +48,16 @@
           <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
           <Property Name="Photo" Type="varbinary(max)" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Frankenstein.dbo.DoctorImage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DoctorImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorId" Type="int" />
+          <Property Name="Photo" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Drugs">
           <Key>
             <PropertyRef Name="DrugId" />
@@ -279,6 +289,13 @@
           <EntitySet Name="TreatmentDetails" EntityType="Self.TreatmentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorImage" EntityType="Self.DoctorImage" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[DoctorImage].[Id] AS [Id], 
+[DoctorImage].[DoctorId] AS [DoctorId], 
+[DoctorImage].[Photo] AS [Photo]
+FROM [dbo].[DoctorImage] AS [DoctorImage]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AppointmentDetails_Appointments" Association="Self.FK_AppointmentDetails_Appointments">
             <End Role="Appointments" EntitySet="Appointments" />
             <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
@@ -388,6 +405,7 @@
             <End Role="Treatment" EntitySet="Treatments" />
             <End Role="TreatmentDetail" EntitySet="TreatmentDetails" />
           </AssociationSet>
+          <EntitySet Name="DoctorImages" EntityType="FrankensteinModel.DoctorImage" />
           </EntityContainer>
         <ComplexType Name="GetUsersTest_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -675,6 +693,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DoctorImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorId" Type="Int32" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -826,6 +852,15 @@
                 <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoctorImages">
+            <EntityTypeMapping TypeName="FrankensteinModel.DoctorImage">
+              <MappingFragment StoreEntitySet="DoctorImage">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

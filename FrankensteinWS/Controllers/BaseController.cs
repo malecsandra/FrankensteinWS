@@ -64,7 +64,7 @@ namespace FrankensteinWS.Controllers
                ReasonPhrase = reason,
                Content = new StringContent(reason)
            };
-           throw new HttpResponseException(response);
+           return new HttpResponseException(response);
        }
     }
 }

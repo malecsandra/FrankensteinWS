@@ -40,7 +40,7 @@ namespace FrankensteinWS.Controllers
             List<DateTime> takenDates = new List<DateTime>();
             List<Appointment> apps = new List<Appointment>();
 
-            apps = db.Appointments.Where(a => a.DoctorId == schedule.DoctorId && a.AppointmentDate.Year == schedule.RequestDate.Year 
+            apps = db.Appointments.Where(a => a.DoctorId == schedule.DoctorId && a.StatusId != -1 && a.AppointmentDate.Year == schedule.RequestDate.Year 
                                                             && a.AppointmentDate.Month == schedule.RequestDate.Month && a.AppointmentDate.Day == schedule.RequestDate.Day).ToList();
 
             foreach (var a in apps)

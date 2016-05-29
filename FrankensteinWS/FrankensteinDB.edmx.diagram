@@ -28,6 +28,7 @@
         <AssociationConnector Association="FrankensteinModel.FK_MedicalTests_Tests" />
         <AssociationConnector Association="FrankensteinModel.FK_Users_Person" />
         <AssociationConnector Association="FrankensteinModel.FK_TreatmentDetails_Treatments" />
+        <EntityTypeShape EntityType="FrankensteinModel.DoctorImage" Width="1.5" PointX="16.375" PointY="0.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

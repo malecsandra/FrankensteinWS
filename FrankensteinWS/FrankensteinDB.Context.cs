@@ -40,6 +40,7 @@ namespace FrankensteinWS
         public DbSet<TreatmentDetail> TreatmentDetails { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<DoctorImage> DoctorImages { get; set; }
     
         public virtual ObjectResult<GetUsersTest_Result> GetUsersTest(Nullable<int> p_ID_USER)
         {
